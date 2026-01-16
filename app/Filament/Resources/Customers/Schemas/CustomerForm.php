@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Customers\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\Operation;
 
 class CustomerForm
 {
@@ -17,10 +16,6 @@ class CustomerForm
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
-                    ->unique()
-                    // ->hiddenOn(Operation::Edit)
-                        ->password()
-
                     ->required(),
                 TextInput::make('phone')
                     ->tel()

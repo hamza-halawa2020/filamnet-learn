@@ -16,5 +16,13 @@ class Customer extends Model
         'email',
         'phone',
         'address',
+        'created_by'
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }
+
+

@@ -35,8 +35,8 @@ class ProductResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $recordTitleAttribute = 'title';
 
-    
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -69,6 +69,8 @@ class ProductResource extends Resource
                     ->numeric(),
                 IconEntry::make('is_active')
                     ->boolean(),
+                TextEntry::make('createdBy.name')
+                    ->label('Created By'),
                 TextEntry::make('created_at')
                     ->dateTime(),
                 TextEntry::make('updated_at')
@@ -81,6 +83,7 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('title')
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
@@ -92,6 +95,9 @@ class ProductResource extends Resource
                     ->sortable(),
                 IconColumn::make('is_active')
                     ->boolean(),
+                TextColumn::make('createdBy.name')
+                    ->label('Created By')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

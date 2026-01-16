@@ -9,11 +9,8 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Actions\Action;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
-use App\Filament\Resources\Products\ProductResource;
-use Illuminate\Database\Eloquent\Builder;
 
 class CustomersTable
 {
@@ -30,11 +27,13 @@ class CustomersTable
                     ->searchable(),
                 TextColumn::make('address')
                     ->searchable(),
+                TextColumn::make('createdBy.name')
+                    ->label('Created By')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                    
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -51,14 +50,6 @@ class CustomersTable
                 ViewAction::make(),
                 EditAction::make(),
             ])
-            // ->headerActions([
-            //     Action::make('addProduct')
-            //         ->label('Add Product')
-            //         ->icon('heroicon-o-plus')
-            //         ->url(ProductResource::getUrl('create')),
-            // ])
-            // ->modifyQueryUsing(fn (Builder $query) => $query->orderBy('created_at', 'desc'))    
-
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
@@ -67,5 +58,4 @@ class CustomersTable
                 ]),
             ]);
     }
-
 }

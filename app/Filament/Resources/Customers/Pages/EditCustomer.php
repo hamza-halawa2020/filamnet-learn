@@ -8,7 +8,6 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Notifications\Notification;
 
 class EditCustomer extends EditRecord
 {
@@ -23,19 +22,4 @@ class EditCustomer extends EditRecord
             RestoreAction::make(),
         ];
     }
-    protected function getSavedNotification(): ?Notification
-    {
-        return null;
-    }
-
-
-    protected function afterSave(): void
-    {
-        Notification::make()
-            ->success()
-            ->title('Customer updated')
-            ->body('The customer has been updated successfully.')
-            ->send();
-    }
-
 }

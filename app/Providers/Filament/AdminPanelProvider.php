@@ -18,16 +18,11 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-
 use WallaceMartinss\FilamentEvolution\FilamentEvolutionPlugin;
- use MWGuerra\FileManager\FileManagerPlugin;
-
+use MWGuerra\FileManager\FileManagerPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
-
-       
-
 
     public function panel(Panel $panel): Panel
     {
@@ -65,8 +60,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             // ->resourceCreatePageRedirect('index') 
             ->plugins([
-            FilamentEvolutionPlugin::make(),
-            FileManagerPlugin::make(),
+
         ]);
     }
 }

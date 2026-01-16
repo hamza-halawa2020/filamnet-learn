@@ -4,8 +4,6 @@ namespace App\Filament\Resources\Customers;
 
 use App\Filament\Resources\Customers\Pages\CreateCustomer;
 use App\Filament\Resources\Customers\Pages\EditCustomer;
-use App\Filament\Resources\Customers\Pages\EditCustomerContact;
-use App\Filament\Resources\Customers\Pages\ViewCustomerContact;
 use App\Filament\Resources\Customers\Pages\ListCustomers;
 use App\Filament\Resources\Customers\Pages\ViewCustomer;
 use App\Filament\Resources\Customers\Schemas\CustomerForm;
@@ -16,12 +14,7 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;  
-use UnitEnum;
-use Filament\Resources\Pages\Page;
-use Filament\Pages\Enums\SubNavigationPosition;
-
-
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -29,28 +22,7 @@ class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static ?string $modelLabel = 'big customer';
-
-    protected static ?string $pluralModelLabel = 'clientes';
-
-    protected static bool $hasTitleCaseModelLabel = false;
-
-    protected static ?string $navigationLabel = 'Mis Clientes';
-
-
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
-
-
-
-    // protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
-    protected static ?int $navigationSort = 1;
-
-    protected static string | UnitEnum | null $navigationGroup = 'Shop';
-
-    
-
-
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'email';
 
@@ -61,7 +33,6 @@ class CustomerResource extends Resource
 
     public static function infolist(Schema $schema): Schema
     {
-
         return CustomerInfolist::configure($schema);
     }
 
@@ -84,10 +55,6 @@ class CustomerResource extends Resource
             'create' => CreateCustomer::route('/create'),
             'view' => ViewCustomer::route('/{record}'),
             'edit' => EditCustomer::route('/{record}/edit'),
-            'edit-contact' => EditCustomerContact::route('/{record}/edit/contact'),
-            'view-contact' => ViewCustomerContact::route('/{record}/contact'),
-
-
         ];
     }
 
@@ -98,19 +65,4 @@ class CustomerResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
-
-
-
-protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
-
-public static function getRecordSubNavigation(Page $page): array
-{
-    return $page->generateNavigationItems([
-        ViewCustomer::class,
-        EditCustomer::class,
-        EditCustomerContact::class,
-        ViewCustomerContact::class,
-    
-    ]);
-}
 }

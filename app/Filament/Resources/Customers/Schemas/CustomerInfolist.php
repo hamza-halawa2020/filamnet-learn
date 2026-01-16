@@ -16,6 +16,8 @@ class CustomerInfolist
                     ->label('Email address'),
                 TextEntry::make('phone'),
                 TextEntry::make('address'),
+                TextEntry::make('createdBy.name')
+                    ->label('Created By'),
                 TextEntry::make('created_at')
                     ->dateTime(),
                 TextEntry::make('updated_at')
@@ -24,7 +26,4 @@ class CustomerInfolist
                     ->dateTime(),
             ]);
     }
-
-
-
 }

@@ -17,5 +17,11 @@ class Product extends Model
         'stock',
         'description',
         'is_active',
+        'created_by'
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use App\Models\User;
 return new class extends Migration
 {
     /**
@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->text('description');
             $table->boolean('is_active')->default(true);
+            $table->foreignIdFor(User::class, 'created_by');
             $table->timestamps();
             $table->softDeletes();
         });

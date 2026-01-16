@@ -14,9 +14,6 @@ class ListCustomers extends ListRecords
     {
         return [
             CreateAction::make(),
-            
-            
         ];
     }
-
 }
