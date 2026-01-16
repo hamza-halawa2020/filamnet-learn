@@ -19,8 +19,16 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+use WallaceMartinss\FilamentEvolution\FilamentEvolutionPlugin;
+ use MWGuerra\FileManager\FileManagerPlugin;
+
+
 class AdminPanelProvider extends PanelProvider
 {
+
+       
+
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -54,6 +62,11 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            // ->resourceCreatePageRedirect('index') 
+            ->plugins([
+            FilamentEvolutionPlugin::make(),
+            FileManagerPlugin::make(),
+        ]);
     }
 }
