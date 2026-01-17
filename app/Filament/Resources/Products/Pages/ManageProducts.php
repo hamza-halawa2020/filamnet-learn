@@ -14,11 +14,10 @@ class ManageProducts extends ManageRecords
     {
         return [
             CreateAction::make()
-                ->mutateDataUsing(function (array $data): array {
-                    $data['created_by'] = auth()->id();
-                    return $data;
-                })
+            ->mutateDataUsing(function(array $data):array{
+                $data['created_by'] = auth()->id();
+                return $data;
+            }),
         ];
     }
-
 }

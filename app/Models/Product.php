@@ -3,25 +3,34 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'products';
-    
+
     protected $fillable = [
-        'title',
-        'price',
-        'stock',
+        'name',
         'description',
-        'is_active',
-        'created_by'
+        'purchase_price',
+        'sale_price',
+        'stock',
+        'code',
+        'image',
+        'created_by',
     ];
 
-    public function createdBy()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function installmentContracts()
+    {
+        return $this->hasMany(InstallmentContract::class, 'product_id');
+    }
+
+     public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'product_id')->latest();
     }
 }

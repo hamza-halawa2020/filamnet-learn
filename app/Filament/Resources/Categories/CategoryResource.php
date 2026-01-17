@@ -1,30 +1,27 @@
 <?php
 
-namespace App\Filament\Resources\Products;
+namespace App\Filament\Resources\Categories;
 
-use App\Filament\Resources\Products\Pages\ManageProducts;
-use App\Models\Product;
+use App\Filament\Resources\Categories\Pages\ManageCategories;
+use App\Models\Category;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ProductResource extends Resource
+class CategoryResource extends Resource
 {
-    protected static ?string $model = Product::class;
+    protected static ?string $model = Category::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
@@ -36,19 +33,11 @@ class ProductResource extends Resource
             ->components([
                 TextInput::make('name')
                     ->required(),
-                Textarea::make('description')
-                    ->columnSpanFull(),
-                TextInput::make('purchase_price')
-                    ->numeric(),
-                TextInput::make('sale_price')
-                    ->numeric(),
-                TextInput::make('stock')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                TextInput::make('code'),
-                FileUpload::make('image')
-                    ->image(),
+                Select::make('parent_id')
+                    ->relationship('parent', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->default(null),
             ]);
     }
 
@@ -57,17 +46,9 @@ class ProductResource extends Resource
         return $schema
             ->components([
                 TextEntry::make('name'),
-                TextEntry::make('purchase_price')
-                    ->numeric(),
-                TextEntry::make('sale_price')
-                    ->numeric(),
-                TextEntry::make('stock')
-                    ->numeric(),
+                TextEntry::make('parent.name')->default('No Parent'),
                 TextEntry::make('creator.name'),
-                TextEntry::make('code'),
-                ImageEntry::make('image'),
                 TextEntry::make('created_at')->date('d/m/Y'),
-
             ]);
     }
 
@@ -78,20 +59,11 @@ class ProductResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('purchase_price')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('sale_price')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('stock')
-                    ->numeric()
+                TextColumn::make('parent.name')
+                    ->default('No Parent')
                     ->sortable(),
                 TextColumn::make('creator.name')
                     ->sortable(),
-                TextColumn::make('code')
-                    ->searchable(),
-                ImageColumn::make('image'),
                 TextColumn::make('created_at')
                     ->date('d/m/Y')
                     ->sortable()
@@ -119,7 +91,7 @@ class ProductResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageProducts::route('/'),
+            'index' => ManageCategories::route('/'),
         ];
     }
 }
