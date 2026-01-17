@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\InstallmentContracts;
 
 use App\Filament\Resources\InstallmentContracts\Pages\ManageInstallmentContracts;
+use App\Filament\Resources\InstallmentContracts\Pages\ViewInstallmentContract;
 use App\Models\InstallmentContract;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
@@ -165,6 +166,7 @@ class InstallmentContractResource extends Resource
     {
         return [
             'index' => ManageInstallmentContracts::route('/'),
+            'view' => ViewInstallmentContract::route('/{record}/view'),
         ];
     }
 }
