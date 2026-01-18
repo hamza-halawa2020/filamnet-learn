@@ -10,10 +10,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "bezhansalleh/filament-language-switch": "^4.0",
         "filament/filament": "4.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "mwguerra/filemanager": "^0.1.8",
+        "spatie/laravel-translation-loader": "*",
+        "tomatophp/filament-translations": "^4.0",
         "wallacemartinss/filament-whatsapp-conector": "^1.0"
     },
     "require-dev": {
