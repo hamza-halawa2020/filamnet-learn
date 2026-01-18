@@ -44,6 +44,7 @@ class InstallmentContractResource extends Resource
                     ->required()
                     ->numeric(),
                 TextInput::make('interest_rate')
+                    ->label('Interest Rate %')
                     ->required()
                     ->numeric()
                     ->default(0.0),
@@ -51,12 +52,20 @@ class InstallmentContractResource extends Resource
                     ->required(),
                 Select::make('client.name')
                 ->label('Client Name')
+                ->getOptionLabelFromRecordUsing(function ($record) {
+                    $debt = $record->debt ?? 0;
+                    return "{$record->name} - {$debt}";
+                })
                 ->relationship('client', 'name')
                 ->searchable()
                 ->preload(),
                 Select::make('product.name')
                 ->label('Product Name')
                 ->relationship('product', 'name')
+                ->getOptionLabelFromRecordUsing(function ($record) {
+                    $price = $record->sale_price ?? 0;
+                    return "{$record->name} - {$price}";
+                })
                 ->searchable()
                 ->preload(),
             ]);

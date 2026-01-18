@@ -20,9 +20,32 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use WallaceMartinss\FilamentEvolution\FilamentEvolutionPlugin;
 use MWGuerra\FileManager\FileManagerPlugin;
-
+use TomatoPHP\FilamentTranslations\FilamentTranslationsPlugin;
+use Filament\Support\Facades\FilamentView;
+use Illuminate\Support\Facades\Blade;
+use Filament\View\PanelsRenderHook;
+use \App\Http\Middleware\SetLocaleMiddleware;
 class AdminPanelProvider extends PanelProvider
 {
+    public function boot(): void
+    {
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::GLOBAL_SEARCH_AFTER,
+            fn (): string => Blade::render('
+                <div class="flex items-center px-3">
+                    @if(app()->getLocale() === \'en\')
+                        <a href="{{ route(\'lang.switch\', [\'locale\' => \'ar\']) }}" title="العربية" class="hover:scale-110 transition-transform">
+                            <img src="https://flagcdn.com/w40/eg.png" width="32" alt="العربية" class="rounded shadow-sm">
+                        </a>
+                    @else
+                        <a href="{{ route(\'lang.switch\', [\'locale\' => \'en\']) }}" title="English" class="hover:scale-110 transition-transform">
+                            <img src="https://flagcdn.com/w40/gb.png" width="32" alt="English" class="rounded shadow-sm">
+                        </a>
+                    @endif
+                </div>
+            '),
+        );
+    }
 
     public function panel(Panel $panel): Panel
     {
@@ -54,13 +77,14 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                SetLocaleMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
             ])
             // ->resourceCreatePageRedirect('index') 
             ->plugins([
-
+                FilamentTranslationsPlugin::make(),
         ]);
     }
 }
