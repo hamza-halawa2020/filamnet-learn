@@ -28,19 +28,34 @@ class ClientResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getModelLabel(): string
+    {
+        return __('filament-translations::translation.client');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament-translations::translation.clients');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('name'),
+                TextInput::make('name')
+                ->label(__('filament-translations::translation.name'))
+                    ->required(),
                 TextInput::make('phone_number')
+                ->label(__('filament-translations::translation.phone_number'))
                     ->tel(),
                 TextInput::make('debt')
+                ->label(__('filament-translations::translation.debt'))
                     ->required()
                     ->numeric()
                     ->default(0.0),
                 Select::make('type')
-                    ->options(['client' => 'Client', 'merchant' => 'Merchant'])
+                ->label(__('filament-translations::translation.type'))
+                    ->options(['client' => __('filament-translations::translation.client'), 'merchant' => __('filament-translations::translation.merchant')])
                     ->default('client')
                     ->required(),
             ]);
@@ -50,13 +65,19 @@ class ClientResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('phone_number'),
+                TextEntry::make('name')
+                ->label(__('filament-translations::translation.name')),
+                TextEntry::make('phone_number')
+                ->label(__('filament-translations::translation.phone_number')),
                 TextEntry::make('debt')
+                ->label(__('filament-translations::translation.debt'))
                     ->numeric(),
-                TextEntry::make('type'),
-                TextEntry::make('creator.name')->label('Created By'),
+                TextEntry::make('type')
+                ->label(__('filament-translations::translation.type')),
+                TextEntry::make('creator.name')
+                ->label(__('filament-translations::translation.creator')),
                 TextEntry::make('created_at')
+                ->label(__('filament-translations::translation.created_at'))
                     ->date('d-m-Y'),
 
             ]);
@@ -68,20 +89,27 @@ class ClientResource extends Resource
             ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                ->label(__('filament-translations::translation.name'))
+                ->searchable(),
                 TextColumn::make('phone_number')
+                ->label(__('filament-translations::translation.phone_number'))
                     ->searchable(),
                 TextColumn::make('debt')
+                ->label(__('filament-translations::translation.debt'))
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('type'),
+                TextColumn::make('type')
+                ->label(__('filament-translations::translation.type')),
                 TextColumn::make('creator.name')
+                ->label(__('filament-translations::translation.creator'))
                     ->sortable(),
                 TextColumn::make('created_at')
+                ->label(__('filament-translations::translation.created_at'))
                     ->date('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                ->label(__('filament-translations::translation.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

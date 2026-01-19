@@ -23,6 +23,8 @@ return [
     'text' => 'Text',
     'scan' => 'Scan For New Languages',
     'namespace' => 'Namespace',
+    'products' => 'Products',
+    'product' => 'Product',
     'notification' => 'Language has been changed successfully',
     'loaded' => 'Translations list has been updated',
     'uploaded' => 'Translations has been uploaded successfully',
@@ -39,8 +41,15 @@ return [
     'lang' => [
         'ar' => 'Arabic',
         'en' => 'English',
-        'pt_BR' => 'Português (Brasil)',
-        'my' => 'Burmese',
-        'de' => 'German',
     ],
+    'fields' => [
+        'name' => 'Name',
+        'parent' => 'Parent',
+        'creator' => 'Creator',
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
+        'no_parent' => 'No Parent',
+    ],
+    'category' => 'Category',
+    'categories' => 'Categories',
 ];

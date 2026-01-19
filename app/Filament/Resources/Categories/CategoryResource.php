@@ -26,14 +26,26 @@ class CategoryResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'name';
+ 
+    public static function getModelLabel(): string
+    {
+        return __('filament-translations::translation.category');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament-translations::translation.categories');
+    }
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('name')
+                ->label(__('filament-translations::translation.name'))
                     ->required(),
                 Select::make('parent_id')
+                ->label(__('filament-translations::translation.parent'))
                     ->relationship('parent', 'name')
                     ->searchable()
                     ->preload()
@@ -45,10 +57,16 @@ class CategoryResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('parent.name')->default('No Parent'),
-                TextEntry::make('creator.name'),
-                TextEntry::make('created_at')->date('d/m/Y'),
+                TextEntry::make('name')
+                ->label(__('filament-translations::translation.name')),
+                TextEntry::make('parent.name')
+                ->label(__('filament-translations::translation.parent'))
+                ->default(__('filament-translations::translation.no_parent')),
+                TextEntry::make('creator.name')
+                ->label(__('filament-translations::translation.creator')),
+                TextEntry::make('created_at')
+                ->label(__('filament-translations::translation.created_at'))
+                ->date('d/m/Y'),
             ]);
     }
 
@@ -58,17 +76,22 @@ class CategoryResource extends Resource
             ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('name')
+                ->label(__('filament-translations::translation.name'))
                     ->searchable(),
                 TextColumn::make('parent.name')
-                    ->default('No Parent')
+                ->label(__('filament-translations::translation.parent'))
+                    ->default(__('filament-translations::translation.no_parent'))
                     ->sortable(),
                 TextColumn::make('creator.name')
+                ->label(__('filament-translations::translation.creator'))
                     ->sortable(),
                 TextColumn::make('created_at')
+                ->label(__('filament-translations::translation.created_at'))
                     ->date('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                ->label(__('filament-translations::translation.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

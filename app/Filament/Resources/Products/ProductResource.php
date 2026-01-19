@@ -31,25 +31,43 @@ class ProductResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function getModelLabel(): string
+    {
+        return __('filament-translations::translation.product');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament-translations::translation.products');
+    }
+
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('filament-translations::translation.product_name'))
                     ->required(),
                 Textarea::make('description')
+                    ->label(__('filament-translations::translation.description'))
                     ->columnSpanFull(),
                 TextInput::make('purchase_price')
+                    ->label(__('filament-translations::translation.purchase_price'))
                     ->numeric(),
                 TextInput::make('sale_price')
+                    ->label(__('filament-translations::translation.sale_price'))
                     ->numeric(),
                 TextInput::make('stock')
+                    ->label(__('filament-translations::translation.stock'))
                     ->required()
                     ->numeric()
                     ->default(0),
-                TextInput::make('code'),
+                TextInput::make('code')
+                    ->label(__('filament-translations::translation.code')),
                 FileUpload::make('image')
-                    ->image(),
+                    ->image()
+                    ->label(__('filament-translations::translation.image')),
             ]);
     }
 
@@ -57,18 +75,27 @@ class ProductResource extends Resource
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
+                TextEntry::make('name')
+                    ->label(__('filament-translations::translation.product_name')),
+                TextEntry::make('description')
+                    ->label(__('filament-translations::translation.description')),
                 TextEntry::make('purchase_price')
+                    ->label(__('filament-translations::translation.purchase_price'))
                     ->numeric(),
                 TextEntry::make('sale_price')
+                    ->label(__('filament-translations::translation.sale_price'))
                     ->numeric(),
                 TextEntry::make('stock')
+                    ->label(__('filament-translations::translation.stock'))
                     ->numeric(),
                 TextEntry::make('creator.name'),
-                TextEntry::make('code'),
-                ImageEntry::make('image'),
-                TextEntry::make('created_at')->date('d/m/Y'),
-
+                TextEntry::make('code')
+                    ->label(__('filament-translations::translation.code')),
+                ImageEntry::make('image')
+                    ->label(__('filament-translations::translation.image')),
+                TextEntry::make('created_at')
+                    ->label(__('filament-translations::translation.created_at'))
+                    ->date('d/m/Y'),
             ]);
     }
 
@@ -78,26 +105,38 @@ class ProductResource extends Resource
             ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('filament-translations::translation.product_name'))
                     ->searchable(),
                 TextColumn::make('purchase_price')
+                    ->label(__('filament-translations::translation.purchase_price'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('sale_price')
+                    ->label(__('filament-translations::translation.sale_price'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('stock')
+                    ->label(__('filament-translations::translation.stock'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('creator.name')
+                    ->label(__('filament-translations::translation.creator'))
                     ->sortable(),
+                    TextColumn::make('description')
+                        ->label(__('filament-translations::translation.description'))
+                        ->searchable(),
                 TextColumn::make('code')
+                    ->label(__('filament-translations::translation.code'))
                     ->searchable(),
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->label(__('filament-translations::translation.image')),
                 TextColumn::make('created_at')
+                    ->label(__('filament-translations::translation.created_at'))
                     ->date('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label(__('filament-translations::translation.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
