@@ -23,6 +23,16 @@ class InstallmentContract extends Model
         'created_by',
     ];
 
+    protected $casts = [
+        'start_date' => 'date',
+        'product_price' => 'decimal:2',
+        'down_payment' => 'decimal:2',
+        'remaining_amount' => 'decimal:2',
+        'interest_amount' => 'decimal:2',
+        'total_amount' => 'decimal:2',
+        'installment_amount' => 'decimal:2',
+    ];
+
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');
@@ -43,12 +53,12 @@ class InstallmentContract extends Model
         return $this->hasMany(Installment::class, 'installment_contract_id')->orderBy('due_date');
     }
 
-    public function getRemainingInstallmentsAttribute()
+    public function getRemainingInstallmentsCountAttribute()
     {
         return $this->installments()->where('status', '!=', 'paid')->count();
     }
 
-    public function getRemainingAmountAttribute()
+    public function getCurrentRemainingAmountAttribute()
     {
         return $this->installments->sum(function ($installment) {
             return $installment->required_amount - $installment->paid_amount;

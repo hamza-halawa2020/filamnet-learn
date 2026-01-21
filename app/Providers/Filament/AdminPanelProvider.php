@@ -79,6 +79,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
                 SetLocaleMiddleware::class,
             ])
+            ->databaseTransactions()
             ->authMiddleware([
                 Authenticate::class,
             ])
